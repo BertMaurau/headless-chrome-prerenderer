@@ -12,9 +12,11 @@ I'm currently working on a platform for multiple clients, which is hosted on a s
 
 I have access to another 'global' server which runs NodeJS, so I've set this 'redirect' up for bots to be redirected this server while normal users still land on the shared hosting's page.
 
+Inspired by the Prerender.io service and the basic Puppeteer example for direct rendering.
+
 ## Setup
 
-Copy the `index` and the `lib/ssr` to the root of the directory (or the location you'd want to run from).
+Clone this repo (or download) and copy the files to the root of the directory (or the location you'd want to run from).
 
    Run `npm install`
 
@@ -25,13 +27,13 @@ If you're using PM2
    Run `pm2 start index.js`
 
 
-Add a rewrite rule to your `.htaccess` to redirect bots/scrapers to the pre-rendered website, but let the normal users go through to a working website.
+On the second host (the actual hosting) add a rewrite rule to your `.htaccess` to redirect bots/scrapers/crawlers to the pre-rendered website, but let the normal users go through to a working website.
 
 ```
 <IfModule mod_rewrite.c>
    RewriteEngine On
-
-   RewriteCond %{HTTP_USER_AGENT} (googlebot|bingbot|yandex|baiduspider|facebookexternalhit|twitterbot|rogerbot|linkedinbot|embedly|quora\ link\ preview|showyoubot|outbrain|pinterest|slackbot|vkShare|W3C_Validator) [NC]
+   # Check if http_proxy is enabled or else you'll get 500 errors
+   RewriteCond %{HTTP_USER_AGENT} (googlebot|bingbot|yandex|baiduspider|facebookexternalhit[0-9]|twitterbot|rogerbot|linkedinbot|embedly|quora\ link\ preview|showyoubot|outbrain|pinterest|slackbot|vkShare|W3C_Validator) [NC]
         
    RewriteRule .* https://your-server:<port>/render?url=%{REQUEST_SCHEME}://%{HTTP_HOST}%{REQUEST_URI} [R,P,L]
 </IfModule>
