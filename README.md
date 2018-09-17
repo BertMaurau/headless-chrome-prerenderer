@@ -31,9 +31,9 @@ Add a rewrite rule to your `.htaccess` to redirect bots/scrapers to the pre-rend
 <IfModule mod_rewrite.c>
    RewriteEngine On
 
-   RewriteCond %{HTTP_USER_AGENT} googlebot|bingbot|yandex|baiduspider|facebookexternalhit|twitterbot|rogerbot|linkedinbot|embedly|quora\ link\ preview|showyoubot|outbrain|pinterest|slackbot|vkShare|W3C_Validator [NC,OR]
+   RewriteCond %{HTTP_USER_AGENT} (googlebot|bingbot|yandex|baiduspider|facebookexternalhit|twitterbot|rogerbot|linkedinbot|embedly|quora\ link\ preview|showyoubot|outbrain|pinterest|slackbot|vkShare|W3C_Validator) [NC]
         
-   RewriteRule .* https://your-server:<port>/render?url=%{REQUEST_SCHEME}://%{HTTP_HOST}%{REQUEST_URI} [P]
+   RewriteRule .* https://your-server:<port>/render?url=%{REQUEST_SCHEME}://%{HTTP_HOST}%{REQUEST_URI} [R,P,L]
 </IfModule>
 ```
 
