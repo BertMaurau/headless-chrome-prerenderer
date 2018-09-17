@@ -1,0 +1,23 @@
+{
+  "name": "headless-chrome-prerenderer",
+  "version": "1.0.0",
+  "description": "A basic NodeJS script for rendering SPA's using headless chrome and Puppeteer.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "puppeteer",
+    "headless",
+    "chrome",
+    "prerender",
+    "seo",
+    "redirect",
+    "angular",
+    "ssr",
+    "spa",
+    "nodejs"
+  ],
+  "author": "Bert Maurau",
+  "license": "MIT"
+}
