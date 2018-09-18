@@ -31,11 +31,14 @@ On the second host (the actual hosting) add a rewrite rule to your `.htaccess` t
 
 ```
 <IfModule mod_rewrite.c>
-   RewriteEngine On
-   # Check if http_proxy is enabled or else you'll get 500 errors
-   RewriteCond %{HTTP_USER_AGENT} (googlebot|bingbot|yandex|baiduspider|facebookexternalhit[0-9]|twitterbot|rogerbot|linkedinbot|embedly|quora\ link\ preview|showyoubot|outbrain|pinterest|slackbot|vkShare|W3C_Validator) [NC]
-        
-   RewriteRule .* https://your-server:<port>/render?url=%{REQUEST_SCHEME}://%{HTTP_HOST}%{REQUEST_URI} [R,P,L]
+    RewriteEngine On
+	
+	<IfModule mod_proxy_http.c>
+      RewriteCond %{HTTP_USER_AGENT} (googlebot|bingbot|yandex|baiduspider|facebookexternalhit[0-9]|twitterbot|rogerbot|linkedinbot|embedly|showyoubot|outbrain|pinterest|slackbot|vkShare|W3C_Validator) [NC]
+		RewriteCond %{Request_URI} !^robots.txt
+		RewriteRule ^(.*) <url-to-render-host>?url=%{REQUEST_SCHEME}://%{HTTP_HOST}%{REQUEST_URI} [P,L]
+	</IfModule>
+
 </IfModule>
 ```
 
